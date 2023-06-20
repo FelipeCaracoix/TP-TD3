@@ -77,9 +77,9 @@ private:
 Invariante de representación:
 
 El vector _editor contiene las palabras del texto en el orden en que aparecen y son palabras sin espacios ni signos de puntuación y sin espacios al principio/final.
-El conjunto _conectivos contiene todas las palabras consideradas como conectivos.
+El conjunto _conectivos contiene todas las palabras dadas como conectivos.
 El conjunto _vocabulario contiene todas las palabras no conectivas del texto, sin repeticiones.
-El mapa _apariciones mapea cada palabra del texto, incluyendo conectivos, con el conjunto de posiciones en las que aparece.
+El mapa _apariciones mapea cada palabra del texto, incluyendo conectivos, con el conjunto de posiciones validas de _editor en las que aparece.
 El entero _conteo_palabras indica la cantidad de palabras no conectivas en el texto, incluyendo repeticiones.
 
 Ejemplo que cumpla: 
@@ -90,7 +90,7 @@ _vocabulario = {"Somos", "estudiantes", "Di", "Tella"};
     Somos: {0}; 
     estudiantes: {1};
     de: {2};
-    la; {3};
+    la: {3};
     Di: {4};
     Tella: {5};
 _conteo_palabras = 4;
@@ -114,4 +114,17 @@ Ejemplo que no cumpla:
 _editor = ["Somos", "estudiantes", "de", "la", "Di", "Tella."]
 No cumple con el invariante de representación ya que signos de puntuación y tampoco cumple la Pre de la función Editor. 
 
+Rep(e : estr)
+
+              |_editor|-1
+_conteo_palabras = ∑  β(_editor[i] ∉ _conectivos) ∧
+                  i=0
+
+(∀x:string)(x ∈ _apariciones => (∀i:int)(i ∈ _apariciones[x] => 0 ≤ i < |editor|)) ∧
+
+(∀x:string)(x ∈ _vocabulario => x ∉ _conectivos) ∧
+
+_conectivos = _conectivos ∧
+
+(∀x: int)(0 ≤ x < |_editor| => (x ∈ _vocabulario ∨ x ∈ _conectivos)) 
 */
